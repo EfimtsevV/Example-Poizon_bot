@@ -18,7 +18,7 @@ dp.include_router(router)
 
 keyboard = InlineKeyboardMarkup(row_width=2)
 urlButton = InlineKeyboardButton(text='Наши отзывы!📖', url='https://t.me/re_stylee', type='url')
-urlButton2 = InlineKeyboardButton(text='Тех.поддержка 👨🏻‍💻', url='@n1let7', type='url')
+urlButton2 = InlineKeyboardButton(text='Тех.поддержка 👨🏻‍💻', url='https://t.me/n1let7', type='url')
 urlButton3 = InlineKeyboardButton(text='Наш Telegram', url='https://t.me/restyle_shop', type='url')
 urlButton4 = InlineKeyboardButton(text='Мы есть на Авито!', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
 keyboard.add(urlButton, urlButton2, urlButton3, urlButton4)
