@@ -15,16 +15,30 @@ router = Router()
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot=bot, storage=MemoryStorage())
 dp.include_router(router)
+# keyboard = InlineKeyboardMarkup(
+#         inline_keyboard=[
+#             [
+#                 InlineKeyboardButton(text='Наши отзывы!📖', url='https://t.me/re_stylee', type='url'),
+#                 InlineKeyboardButton(text='Тех.поддержка 👨🏻‍💻', url='https://t.me/n1let7', type='url'),
+#                 InlineKeyboardButton(text='Наш Telegram', url='https://t.me/restyle_shop', type='url'),
+#                 InlineKeyboardButton(text='Мы есть на Авито!', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
+#             ]
+#         ]
+#     )
+
 keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(text='Наши отзывы!📖', url='https://t.me/re_stylee', type='url'),
-                InlineKeyboardButton(text='Тех.поддержка 👨🏻‍💻', url='https://t.me/n1let7', type='url'),
-                InlineKeyboardButton(text='Наш Telegram', url='https://t.me/restyle_shop', type='url'),
-                InlineKeyboardButton(text='Мы есть на Авито!', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
-            ]
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text='Наши отзывы!📖', url='https://t.me/re_stylee', type='url'),
+            InlineKeyboardButton(text='Тех.поддержка 👨🏻‍💻', url='https://t.me/n1let7', type='url')
+        ],
+        [
+            InlineKeyboardButton(text='Наш Telegram', url='https://t.me/restyle_shop', type='url'),
+            InlineKeyboardButton(text='Мы есть на Авито!', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
         ]
-    )
+    ],
+    row_width=2  # Set the row width to 2
+)
 
 @router.message(Command("start"))
 async def start_handler(msg: Message, state: FSMContext):
