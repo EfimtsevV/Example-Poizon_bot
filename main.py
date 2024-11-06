@@ -5,11 +5,21 @@ from aiogram.types import Message
 from aiogram.utils.keyboard import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram import F
+
+
 import asyncio
 import logging
 
+
+
 from src.config import TOKEN
-from src.text import start_message_text
+from src.text import start_message_text, pozion_text, instruction_text, actual_course_text, delivery_text, place_order_text
+
+from src.take_curs import cny_rate
+
+
 
 logging.basicConfig(level=logging.INFO)
 router = Router()
@@ -25,7 +35,7 @@ inline_keyboard = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton(text='Наш Telegram🔥', url='https://t.me/restyle_shop', type='url'),
-            InlineKeyboardButton(text='Мы есть на Авито', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
+            InlineKeyboardButton(text='Мы есть на Авито📦', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
         ]
     ],
     row_width=2  # Set the row width to 2
@@ -35,8 +45,7 @@ reply_keyboard = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text='Что такое POIZON❓'), KeyboardButton(text='Инструкция по заказу📜')],
         [KeyboardButton(text='Доставка🚚✈️'), KeyboardButton(text='Актуальный курс💹')],
-        [KeyboardButton(text='Калькулятор💸')],
-        [KeyboardButton(text='Оформить заказ🛒')]
+        [KeyboardButton(text='Калькулятор💸'),KeyboardButton(text='Оформить заказ🛒')]
     ],
     resize_keyboard=True
 )
@@ -48,6 +57,52 @@ async def start_handler(msg: Message, state: FSMContext):
     await msg.answer(start_message_text, reply_markup=inline_keyboard)
     # Send a separate message to ensure the reply keyboard is set
     await msg.answer("Выберите опцию из меню-клавиатуры:", reply_markup=reply_keyboard)
+
+@router.message(F.text.startswith('Что такое POIZON❓'))
+async def send_poizon(message: types.Message, state: FSMContext):
+    await state.set_state(None)  # Reset state if needed
+    await message.reply(pozion_text)
+    
+
+@router.message(F.text.startswith('Инструкция по заказу📜'))
+async def send_poizon(message: types.Message, state: FSMContext):
+    await state.set_state(None)  # Reset state if needed
+    await message.reply(instruction_text)
+
+
+@router.message(F.text.startswith('Доставка🚚✈️'))
+async def send_poizon(message: types.Message, state: FSMContext):
+    await state.set_state(None)  # Reset state if needed
+    await message.reply(delivery_text)
+
+@router.message(F.text.startswith('Оформить заказ🛒'))
+async def send_poizon(message: types.Message, state: FSMContext):
+    await state.set_state(None)  # Reset state if needed
+    await message.reply(place_order_text)
+    
+@router.message(F.text.startswith('Актуальный курс💹'))
+async def send_poizon(message: types.Message, state: FSMContext):
+    await state.set_state(None)  # Reset state if needed
+    await message.reply(actual_course_text)
+    
+class CalculatorStates(StatesGroup):
+    waiting_for_price = State()  # Состояние ожидания цены
+    
+@router.message(F.text.startswith('Калькулятор💸'))
+async def calculator_handler(message: types.Message, state: FSMContext):
+    await state.set_state(CalculatorStates.waiting_for_price)  # Установить состояние ожидания
+    await message.reply("Пожалуйста, введите стоимость позиции в юанях:")
+
+@router.message(CalculatorStates.waiting_for_price)
+async def process_price(message: types.Message, state: FSMContext):
+    try:
+        price_in_cny = float(message.text)  # Преобразовать текст в число
+        total_price = price_in_cny * cny_rate  # Умножить на курс
+        await message.reply(f"Стоимость в рублях: {total_price:.2f}₽")  # Отправить результат
+    except ValueError:
+        await message.reply("Пожалуйста, введите число.")  # Обработка ошибки
+    finally:
+        await state.clear()  # Очистить состояние после обработки
 
 async def main():
      try:
