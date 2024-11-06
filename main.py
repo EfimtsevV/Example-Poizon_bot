@@ -15,17 +15,20 @@ router = Router()
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot=bot, storage=MemoryStorage())
 dp.include_router(router)
-
-keyboard = InlineKeyboardMarkup(row_width=2)
-urlButton = InlineKeyboardButton(text='Наши отзывы!📖', url='https://t.me/re_stylee', type='url')
-urlButton2 = InlineKeyboardButton(text='Тех.поддержка 👨🏻‍💻', url='https://t.me/n1let7', type='url')
-urlButton3 = InlineKeyboardButton(text='Наш Telegram', url='https://t.me/restyle_shop', type='url')
-urlButton4 = InlineKeyboardButton(text='Мы есть на Авито!', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
-keyboard.add(urlButton, urlButton2, urlButton3, urlButton4)
+keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Наши отзывы!📖', url='https://t.me/re_stylee', type='url'),
+                InlineKeyboardButton(text='Тех.поддержка 👨🏻‍💻', url='https://t.me/n1let7', type='url'),
+                InlineKeyboardButton(text='Наш Telegram', url='https://t.me/restyle_shop', type='url'),
+                InlineKeyboardButton(text='Мы есть на Авито!', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
+            ]
+        ]
+    )
 
 @router.message(Command("start"))
 async def start_handler(msg: Message, state: FSMContext):
-    await state.finish()
+    await state.set_state(None)  # Устанавливаем состояние в None
     await msg.answer(start_message_text, reply_markup=keyboard)
 
 async def main():
