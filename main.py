@@ -20,12 +20,12 @@ dp.include_router(router)
 inline_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text='Наши отзывы!📖', url='https://t.me/re_stylee', type='url'),
-            InlineKeyboardButton(text='Тех.поддержка 👨🏻‍💻', url='https://t.me/n1let7', type='url')
+            InlineKeyboardButton(text='Наши отзывы📖', url='https://t.me/re_stylee', type='url'),
+            InlineKeyboardButton(text='Тех.поддержка👨🏻‍💻', url='https://t.me/n1let7', type='url')
         ],
         [
-            InlineKeyboardButton(text='Наш Telegram', url='https://t.me/restyle_shop', type='url'),
-            InlineKeyboardButton(text='Мы есть на Авито!', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
+            InlineKeyboardButton(text='Наш Telegram🔥', url='https://t.me/restyle_shop', type='url'),
+            InlineKeyboardButton(text='Мы есть на Авито', url='https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing', type='url')
         ]
     ],
     row_width=2  # Set the row width to 2
@@ -33,9 +33,10 @@ inline_keyboard = InlineKeyboardMarkup(
 
 reply_keyboard = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text='Что такое POIZON?'), KeyboardButton(text='Инструкция по заказу')],
+        [KeyboardButton(text='Что такое POIZON❓'), KeyboardButton(text='Инструкция по заказу📜')],
         [KeyboardButton(text='Доставка🚚✈️'), KeyboardButton(text='Актуальный курс💹')],
-        [KeyboardButton(text='Калькулятор💸')]
+        [KeyboardButton(text='Калькулятор💸')],
+        [KeyboardButton(text='Оформить заказ🛒')]
     ],
     resize_keyboard=True
 )
