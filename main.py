@@ -19,7 +19,7 @@ from take_curs import cny_rate
 from src.text import start_message_text, pozion_text, instruction_text, delivery_text, place_order_text
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.ERROR)
 router = Router()
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot=bot, storage=MemoryStorage())
