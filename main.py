@@ -94,14 +94,14 @@ async def calculator_handler(message: types.Message, state: FSMContext):
 
 @router.message(CalculatorStates.waiting_for_price)
 async def process_price(message: types.Message, state: FSMContext):
-    try:
-        price_in_cny = float(message.text)  # Преобразовать текст в число
-        total_price = price_in_cny * (cny_rate+float(1.5))  # Умножить на курс
-        await message.reply(f"Стоимость в рублях: {total_price:.2f}₽")  # Отправить результат
-    except ValueError:
-        await message.reply("Пожалуйста, введите число.")  # Обработка ошибки
-    finally:
-        await state.clear()  # Очистить состояние после обработки
+    if not message.text.isdigit():
+        return await message.reply("Пожалуйста, введите число.")  # Обработка ошибки
+
+        
+    price_in_cny = float(message.text)  # Преобразовать текст в число
+    total_price = price_in_cny * (cny_rate+float(1.5))  # Умножить на курс
+    await message.reply(f"Стоимость в рублях: {total_price:.2f}₽")  # Отправить результат
+    await state.clear()  # Очистить состояние после обработки
 
 async def main():
      try:
