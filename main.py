@@ -82,7 +82,7 @@ async def send_poizon(message: types.Message, state: FSMContext):
 @router.message(F.text.startswith('Актуальный курс💹'))
 async def send_poizon(message: types.Message, state: FSMContext):
     await state.set_state(None)  # Reset state if needed
-    await message.reply(f"Актуальный курс юаня: {(cny_rate+float(1.2)):.2f}₽")
+    await message.reply(f"Актуальный курс юаня: {(cny_rate+float(1.5)):.2f}₽")
     
 class CalculatorStates(StatesGroup):
     waiting_for_price = State()  # Состояние ожидания цены
@@ -96,7 +96,7 @@ async def calculator_handler(message: types.Message, state: FSMContext):
 async def process_price(message: types.Message, state: FSMContext):
     try:
         price_in_cny = float(message.text)  # Преобразовать текст в число
-        total_price = price_in_cny * (cny_rate+float(1.2))  # Умножить на курс
+        total_price = price_in_cny * (cny_rate+float(1.5))  # Умножить на курс
         await message.reply(f"Стоимость в рублях: {total_price:.2f}₽")  # Отправить результат
     except ValueError:
         await message.reply("Пожалуйста, введите число.")  # Обработка ошибки
