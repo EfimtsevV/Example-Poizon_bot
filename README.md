@@ -40,25 +40,11 @@ https://t.me/restyle_shop
 import requests
 
 def get_cny_exchange_rate():
-    url = "https://www.cbr.ru/scripts/XML_daily.asp"
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        from xml.etree import ElementTree as ET
-        tree = ET.fromstring(response.content)
-        
-        for valute in tree.findall("Valute"):
-            if valute.find("CharCode").text == "CNY":
-                return float(valute.find("Value").text.replace(',', '.'))
-    return None
+Находим курс юаня на сайте Центрального Банка России и сохраняем курс юаня в переменную
 
-#Сохраняем курс юаня в переменную
-cny_rate = get_cny_exchange_rate()
-print(f"Актуальный курс юаня: {cny_rate} руб.")
-
-9. Мы есть на Авито! +
+1. Мы есть на Авито! +
 Мы не только принимаем заказы, но и продаем вещи по выгодным ценам!)
 https://www.avito.ru/brands/fb5ec54987ddf9def727470a228c2d1b?src=sharing
 
-10. Оформить заказ🛒
+1.  Оформить заказ🛒
 @n1let7

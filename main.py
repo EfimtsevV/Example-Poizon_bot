@@ -15,10 +15,8 @@ import logging
 
 
 from src.config import TOKEN
-from src.text import start_message_text, pozion_text, instruction_text, actual_course_text, delivery_text, place_order_text
-
-from src.take_curs import cny_rate
-
+from take_curs import cny_rate
+from src.text import start_message_text, pozion_text, instruction_text, delivery_text, place_order_text
 
 
 logging.basicConfig(level=logging.INFO)
@@ -67,23 +65,24 @@ async def send_poizon(message: types.Message, state: FSMContext):
 @router.message(F.text.startswith('Инструкция по заказу📜'))
 async def send_poizon(message: types.Message, state: FSMContext):
     await state.set_state(None)  # Reset state if needed
-    await message.reply(instruction_text)
+    await message.reply(instruction_text, reply_markup=inline_keyboard)
+    
 
 
 @router.message(F.text.startswith('Доставка🚚✈️'))
 async def send_poizon(message: types.Message, state: FSMContext):
     await state.set_state(None)  # Reset state if needed
-    await message.reply(delivery_text)
+    await message.reply(delivery_text, reply_markup=inline_keyboard)
 
 @router.message(F.text.startswith('Оформить заказ🛒'))
 async def send_poizon(message: types.Message, state: FSMContext):
     await state.set_state(None)  # Reset state if needed
-    await message.reply(place_order_text)
+    await message.reply(place_order_text, reply_markup=inline_keyboard)
     
 @router.message(F.text.startswith('Актуальный курс💹'))
 async def send_poizon(message: types.Message, state: FSMContext):
     await state.set_state(None)  # Reset state if needed
-    await message.reply(actual_course_text)
+    await message.reply(f"Актуальный курс юаня: {(cny_rate+float(1.2)):.2f}₽")
     
 class CalculatorStates(StatesGroup):
     waiting_for_price = State()  # Состояние ожидания цены
@@ -97,7 +96,7 @@ async def calculator_handler(message: types.Message, state: FSMContext):
 async def process_price(message: types.Message, state: FSMContext):
     try:
         price_in_cny = float(message.text)  # Преобразовать текст в число
-        total_price = price_in_cny * cny_rate  # Умножить на курс
+        total_price = price_in_cny * (cny_rate+float(1.2))  # Умножить на курс
         await message.reply(f"Стоимость в рублях: {total_price:.2f}₽")  # Отправить результат
     except ValueError:
         await message.reply("Пожалуйста, введите число.")  # Обработка ошибки
